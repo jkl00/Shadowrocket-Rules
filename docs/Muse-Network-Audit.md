@@ -96,14 +96,14 @@ C 类不等于无用或被屏蔽；它们仍按上游原有规则分流。上线
 | 支付/订阅 | S1 Stripe iframe/CSP、S6 Stripe Link 能力说明 | **未测试**：未购买、开通订阅或更改支付设置。 |
 | 各地区 CDN 与实时音视频 | CSP 和固定主机线索 | **未测试**：当前 HTTP 响应不能代表其他地区/账号。 |
 
-未运行 iPhone Shadowrocket，未执行其真实解析器或规则诊断。静态域名测试只能证明按 DOMAIN/DOMAIN-SUFFIX 语义匹配预期，不证明网络链路、账号地区、美国节点质量或全部功能正常。
+未运行 iPhone Shadowrocket，未执行其真实解析器或规则诊断。静态域名测试只能证明按 DOMAIN/DOMAIN-SUFFIX 语义匹配预期，不证明网络链路、账号地区、日本节点质量或全部功能正常。
 
 ## 主配置的优先级与保留项
 
 新增策略组：
 
 ```ini
-🎬 Muse / Meta = select,🇺🇸 美国节点,🚀 节点选择,PROXY,DIRECT,policy-select-name=🇺🇸 美国节点
+🎬 Muse / Meta = select,🇯🇵 日本节点,🚀 节点选择,PROXY,DIRECT,policy-select-name=🇯🇵 日本节点
 ```
 
 个人 RULE-SET 在上游 HTTPDNS 防泄露之后，邮件、Google、AI、Global 之前。此前的规则保留原顺序；未发现与启用域名相交的前置显式域名规则。局域网、私有 IP、WebRTC 特殊策略仍然优先；没有把 Muse 规则移到它们前面。
@@ -114,7 +114,7 @@ Google/Gemini、AI、邮件、IBKR/券商等上游远程 URL 与规则均保留�
 
 ## iPhone Shadowrocket 验收与补漏
 
-1. 使用 [个人配置](https://raw.githubusercontent.com/jkl00/Shadowrocket-Rules/main/Shadowrocket.conf) 下载并启用；更新远程规则。确认 `🎬 Muse / Meta` 为 `🇺🇸 美国节点`，美国节点组有可用节点。现有手动选择可能保留，配置默认值不保证覆盖客户端旧选择。
+1. 使用 [个人配置](https://raw.githubusercontent.com/jkl00/Shadowrocket-Rules/main/Shadowrocket.conf) 下载并启用；更新远程规则。确认 `🎬 Muse / Meta` 为 `🇯🇵 日本节点`，日本节点组有可用节点。现有手动选择可能保留，配置默认值不保证覆盖客户端旧选择。
 2. 在 Shadowrocket 的规则测试/域名匹配功能（如当前版本提供）分别输入 `muse.ai`、`auth.muse.ai`、`auth.meta.com`、`meta.ai`；确认命中 `Muse_Meta.list` 并选择 `🎬 Muse / Meta`。`auth.muse.ai` 即使不提供服务，后缀匹配也应成立，不能用页面是否打开判断规则对错。
 3. 清空/标记一段连接记录，断开旧 Muse 连接后重新打开网页；在 Shadowrocket 连接日志中逐条查看目标域名、命中规则、策略组和最终节点。界面菜单名随版本变化；不要为抓日志开启 MITM。
 4. 逐项测试登录、普通对话、图片/视频生成、上传一个无隐私的小文件并下载预览、工作区/云端浏览器；再自行授权一个确实需要的第三方 Connector，只做只读请求。支付/订阅可检查页面加载，实际付款由本人决定。

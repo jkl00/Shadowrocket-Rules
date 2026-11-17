@@ -14,7 +14,7 @@
 本 Fork 基于 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)，保留原作者 MIT LICENSE 与规则体系。
 
 - 新增独立的 `Muse_Meta.list`，覆盖 Muse 网页、VM 网关、Meta 账号及有代码证据的资源域名。证据分级、可选域名、副作用和测试缺口见 [Muse 网络审计](docs/Muse-Network-Audit.md)。本版本不声称已覆盖所有功能。
-- `🎬 Muse / Meta` 默认使用现有 `🇺🇸 美国节点`，可手动切换为 `🚀 节点选择`、`PROXY` 或 `DIRECT`。请确保美国节点组内有可用节点。
+- `🎬 Muse / Meta` 默认使用现有 `🇯🇵 日本节点`，可手动切换为 `🚀 节点选择`、`PROXY` 或 `DIRECT`。请确保日本节点组内有可用节点。
 - `auth.meta.com` 已被 `DOMAIN-SUFFIX,meta.com` 覆盖，无需重复添加。Facebook / Instagram 仅纳入有认证代码证据的精确主机；这仍会影响访问同一主机的其他应用。
 - Shadowrocket → 配置 → `+` → 粘贴 `https://raw.githubusercontent.com/jkl00/Shadowrocket-Rules/main/Shadowrocket.conf` → 下载并启用，再添加自己的节点或订阅。下方二维码也指向此个人版地址。
 - 配置自身的 `update-url` 和个人规则指向本 Fork；Google、AI、邮件、银行、券商等远程规则继续引用上游。
@@ -41,7 +41,7 @@
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
 | 1 | 🧱 DNS 防泄露（HTTPDNS） | REJECT |
-| 2 | 🎬 Muse / Meta | 美国节点，可手动切换 |
+| 2 | 🎬 Muse / Meta | 日本节点，可手动切换 |
 | 3 | 📧 邮件服务（IMAP / POP3 / SMTP） | PROXY，可切换 DIRECT 或地区节点 |
 | 4 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港节点 |
 | 5 | 🤖 AI 服务（ChatGPT、Claude、苹果智能等） | 美国节点 |
@@ -69,7 +69,7 @@
 | 🧱 DNS 防泄露 | REJECT | 节点选择、DIRECT |
 | 📧 邮件服务 | PROXY | DIRECT、节点选择、日本节点、香港节点 |
 | 🔍 谷歌服务 | 🇯🇵 日本节点 | 🇭🇰 香港节点、节点选择、PROXY、DIRECT |
-| 🎬 Muse / Meta | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT |
+| 🎬 Muse / Meta | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT |
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT |
 | 🍎 苹果推送 | 🚀 节点选择 | PROXY、DIRECT |
 | 🍏 苹果服务 | DIRECT | 节点选择、PROXY |
