@@ -9,10 +9,22 @@
 - 在新规下的香港券商访问
 - 导入后添加自己的节点或订阅即可使用
 
+## 个人定制
+
+本 Fork 基于 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)，保留原作者 MIT LICENSE 与规则体系。
+
+- 新增独立的 `Muse_Meta.list`，覆盖 Muse 网页、VM 网关、Meta 账号及有代码证据的资源域名。证据分级、可选域名、副作用和测试缺口见 [Muse 网络审计](docs/Muse-Network-Audit.md)。本版本不声称已覆盖所有功能。
+- `🎬 Muse / Meta` 默认使用现有 `🇺🇸 美国节点`，可手动切换为 `🚀 节点选择`、`PROXY` 或 `DIRECT`。请确保美国节点组内有可用节点。
+- `auth.meta.com` 已被 `DOMAIN-SUFFIX,meta.com` 覆盖，无需重复添加。Facebook / Instagram 仅纳入有认证代码证据的精确主机；这仍会影响访问同一主机的其他应用。
+- Shadowrocket → 配置 → `+` → 粘贴 `https://raw.githubusercontent.com/jkl00/Shadowrocket-Rules/main/Shadowrocket.conf` → 下载并启用，再添加自己的节点或订阅。下面保留的原作者二维码指向上游，请使用本链接导入个人版。
+- 配置自身的 `update-url` 和个人规则指向本 Fork；Google、AI、邮件、银行、券商等远程规则继续引用上游。
+- 以后在本仓库 GitHub 首页选择 **Sync fork → Update branch** 同步上游；如有冲突，不要丢弃个人提交。重点保留 `Shadowrocket.conf` 中个人 `update-url`、策略组和 RULE-SET 插入位置，以及此章节、`Muse_Meta.list`、审计文档。原文后面的优先级表描述上游规则；个人 Muse 规则插在 HTTPDNS 之后、邮件之前。
+- 本地同步可用 `git fetch upstream`、`git switch main`、`git merge upstream/main`，解决冲突并复核上述入口后再 `git push origin main`；首次克隆 Fork 时用 `git remote add upstream https://github.com/LingJingMaster/Shadowrocket-Rules.git` 建立关联。不要强推或以重置方式丢弃个人修改。
+
 ## 快速开始
 
 1. 复制配置文件的 Raw 链接：
-   `https://raw.githubusercontent.com/LingJingMaster/Shadowrocket-Rules/refs/heads/main/Shadowrocket.conf`
+   `https://raw.githubusercontent.com/jkl00/Shadowrocket-Rules/main/Shadowrocket.conf`
 2. 打开 Shadowrocket → 配置 → 右上角 `+` → 粘贴链接 → 下载
 3. 点击已下载的配置，设为使用中（✔️）
 4. 首页添加你自己的节点或订阅

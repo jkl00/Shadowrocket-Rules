@@ -1,0 +1,25 @@
+# Muse / Meta personal routing rules
+# Evidence, optional hosts and known gaps: docs/Muse-Network-Audit.md
+# A: core service / authentication
+DOMAIN-SUFFIX,muse.ai
+DOMAIN-SUFFIX,metaaivm.com
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,meta.com
+
+# B: app preview origins explicitly handled by current Muse JavaScript
+DOMAIN-SUFFIX,metaaiusercontent.com
+DOMAIN-SUFFIX,ecto1usercontent.com
+
+# B: explicit production / voice hosts in current Muse JavaScript
+DOMAIN,production.museai.com
+DOMAIN,voice.museai.com
+
+# B: authentication routes explicitly accepted by current Muse JavaScript
+# Side effect: these entire hosts also serve Facebook / Instagram pages.
+DOMAIN,www.facebook.com
+DOMAIN,www.instagram.com
+
+# A/B: exact CDN hosts in public Meta auth HTML / Muse resource loader
+# Side effect: other Meta apps using these same hosts share this policy.
+DOMAIN,static.xx.fbcdn.net
+DOMAIN,nest-static.fbcdn.net
