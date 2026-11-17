@@ -23,3 +23,7 @@ DOMAIN,www.instagram.com
 # Side effect: other Meta apps using these same hosts share this policy.
 DOMAIN,static.xx.fbcdn.net
 DOMAIN,nest-static.fbcdn.net
+
+# Observed by user in iPhone Muse browsing logs (2026-11-17).
+# Shared marketing host: other sites using it also follow Muse / Meta.
+DOMAIN,x-marketing.fbthirdpartypixel.com

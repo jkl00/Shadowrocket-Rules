@@ -50,6 +50,7 @@ S1 的关键公开脚本（文件名可能随发布变化）：
 | DOMAIN | www.instagram.com | B | S1 对此主机 `/auth_platform` 认证跳转的明确校验 | 影响该主机的 Instagram 浏览/登录；未加入整个 `instagram.com`。 |
 | DOMAIN | static.xx.fbcdn.net | A | S5 公开登录 HTML 直接引用图标和多个脚本 | Facebook/Instagram 等复用此主机的静态资源也会走此策略。 |
 | DOMAIN | nest-static.fbcdn.net | B | S1 明确构造的 Muse 资源加载路径 | 其他复用此 CDN 主机的应用也可能受影响。 |
+| DOMAIN | x-marketing.fbthirdpartypixel.com | B（用户日志确认请求，辅助依赖） | S1 营销 iframe origin；2026-11-17 用户反馈 iPhone Safari 访问 Muse 后连接日志出现该主机 | 其他网站使用这个营销主机的流量也会走 Muse/Meta；不是已证明的登录/对话核心依赖。 |
 
 规则文件只有 `DOMAIN` / `DOMAIN-SUFFIX` 与域名两列，无策略组名。
 不重复添加 `auth.meta.com`、`api.muse.ai`、`hatch.metaaivm.com` 等已被后缀覆盖的精确规则。
@@ -77,7 +78,8 @@ S1 的关键公开脚本（文件名可能随发布变化）：
 | youtube.com / youtube-nocookie.com | C | CSP 嵌入能力，未纳入 Muse，原视频规则保留。 |
 | hatch.ecto1.ai / hatch.club | C | 生产/兼容 origin 集中的其他名称，未确认当前用户实际使用；未加入。 |
 | willow606.com / exe.xyz / par-msl.dev / localhost | C | VM 地址辅助或开发允许列表；不是请求观测，未启用。 |
-| x-marketing.fbthirdpartypixel.com / va.vercel-scripts.com | C | 营销/测量代码，未把测量流量作为功能依赖。 |
+| x-marketing.fbthirdpartypixel.com | B（辅助依赖） | 已由用户在 iPhone Muse 浏览日志中观察到；为统一出口策略，启用精确 DOMAIN，不扩大到整个 `fbthirdpartypixel.com`。 |
+| va.vercel-scripts.com | C | 测量代码，尚未确认需统一出口，未启用。 |
 
 C 类不等于无用或被屏蔽；它们仍按上游原有规则分流。上线后如发现它们与 Muse 主链路出口不一致导致问题，再根据日志有针对性地补入。
 
@@ -127,10 +129,18 @@ Google/Gemini、AI、邮件、IBKR/券商等上游远程 URL 与规则均保留�
 
 - 通过区块保留、策略组引用与默认值、所有规则策略引用检查。
 - 16 个应命中与 14 个不应命中的域名案例通过，包括 `muse.ai`、`auth.muse.ai`、`auth.meta.com`、`meta.ai`；也验证未扩大到整个 Facebook、Instagram、WhatsApp、Workers、Fastly 和 Google APIs。
-- 12 条启用规则均为两列格式，无重复或被其他个人后缀规则冗余覆盖的条目。
+- 当前 13 条启用规则均为两列格式，无重复或被其他个人后缀规则冗余覆盖的条目。新增营销主机已验证精确命中，并验证同域其他主机不因本次改动被纳入。
 - 逐字比较确认主配置只变更 update-url、添加一个组和一条 RULE-SET；所有原规则/策略组、区块、远程来源保持不变。检查当前前置显式域名及 HTTPDNS 集，没有发现与启用个人域名交集；端口/IP 例外仍保留。
 - LICENSE 和其余上游已跟踪文件字节一致；仅计划提交四个目标文件。敏感模式扫描和人工 diff 检查未发现订阅、节点、密码、私钥、GitHub Token 或账号会话数据。
 - 上述是自编静态校验，不是 Shadowrocket 官方解析器或真实客户端测试。Raw URL 可访问性须在推送后另行检查。
+
+## iPhone 日志补充：统一营销主机的出口策略
+
+2026-11-17，用户报告 Safari 访问 Muse 后，`muse.ai:443` 使用「日本专线5-0.1倍率」，而 `x-marketing.fbthirdpartypixel.com:443` 使用「非中国」策略下的「日本2号-0.1倍率」。这是用户提供的实测观察，不是本代理直接执行的 iPhone 测试；两个节点是否拥有不同公网出口 IP 未核实。
+
+据此新增 `DOMAIN,x-marketing.fbthirdpartypixel.com`，使两者均由 `🎬 Muse / Meta → 🇯🇵 日本节点` 决定出站。现有个人 RULE-SET 优先于 Global，主配置无需改动。请更新远程规则缓存、重建连接后，再在日志中核对两域的策略和最终节点。
+
+仅凭不同节点记录不能判断 Muse 是否会触发风控；营销/测量请求也不能等同于账号认证请求。此改动统一已知主机的策略选择，不声称消除风控或覆盖所有依赖。日本节点组采用 `url-test`，可能随测速切换；同一节点本身也可能采用动态出口，因此统一策略不保证永久固定公网 IP。该精确主机是共享营销基础设施，其他网站访问它时也受此规则影响。
 
 ## 维护与回滚
 
